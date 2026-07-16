@@ -1,8 +1,10 @@
 from ollama import chat
 from ollama import ChatResponse
 import os
+import copy  # Added to prevent list mutation bugs
 
 IMAGE_DIR = 'projects/VQA_Ambiguity/images'
+OUTPUT_DIR = 'projects/VQA_Ambiguity/output'  # Pulled out as a constant
 
 models = ['gemma4:31b', 'haervwe/GLM-4.6V-Flash-9B:latest', 'qwen3-vl:32b']
 personas = ['fully blind person', 'person that has cataracts']
@@ -64,44 +66,69 @@ few_shot_examples = {
     ]
 }
 
+# Ensure output directory exists before writing
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 for file in os.listdir(IMAGE_DIR):
     if file.endswith('.jpg'):
         image_path = os.path.join(IMAGE_DIR, file)
-        print(image_path)
+        output_file_path = os.path.join(OUTPUT_DIR, file.removesuffix('.jpg') + '.txt')
+        
+        print(f"Processing image: {image_path}")
 
-        for persona in personas:
-            message = [
-                {
-                    'role': 'system',
-                    'content': system_prompt_template.format(persona=persona)
-                }
-            ]
+        # Open the file once per image to append results neatly
+        with open(output_file_path, 'w', encoding='utf-8') as out_file:
+            out_file.write(f"IMAGE: {file}\n")
+            out_file.write("=" * 60 + "\n\n")
 
-            zero_shot_message = message
-            zero_shot_message.append({
-                'role': 'user',
-                'content': 'Analyze this image and ask your question.',
-                'images': [image_path]
-            })
+            for persona in personas:
+                # Re-initialize the base message per loop
+                base_message = [
+                    {
+                        'role': 'system',
+                        'content': system_prompt_template.format(persona=persona)
+                    }
+                ]
 
-            few_shot_message = message
-            few_shot_message.extend(few_shot_examples[persona])
+                # Use deepcopy to avoid mutating the base_message across iterations
+                zero_shot_message = copy.deepcopy(base_message)
+                zero_shot_message.append({
+                    'role': 'user',
+                    'content': 'Analyze this image and ask your question.',
+                    'images': [image_path]
+                })
 
-            print(few_shot_message)
-            
-            few_shot_message.append({
-                'role': 'user',
-                'content': 'Analyze this image and ask your question.',
-                'images': [image_path]
-            })
-
-            
-            for model in models:
-                # zero_response: ChatResponse = chat(model=model, messages=zero_shot_message)
-                # few_shot_response: ChatResponse = chat(model=model, messages=few_shot_message)
-
-                output_file_path = os.path.join('projects/VQA_Ambiguity', 'output', file.removesuffix('.jpg') + '.txt')
+                few_shot_message = copy.deepcopy(base_message)
+                few_shot_message.extend(few_shot_examples[persona])
+                few_shot_message.append({
+                    'role': 'user',
+                    'content': 'Analyze this image and ask your question.',
+                    'images': [image_path]
+                })
                 
-                
+                for model in models:
+                    print(f"  -> Running model: {model} | Persona: {persona}")
+                    
+                    out_file.write(f"PERSONA: {persona}\n")
+                    out_file.write(f"MODEL: {model}\n")
+                    out_file.write("-" * 60 + "\n")
 
+                    # ZERO-SHOT INFERENCE
+                    out_file.write(">>> ZERO-SHOT RESPONSE <<<\n")
+                    try:
+                        zero_response: ChatResponse = chat(model=model, messages=zero_shot_message)
+                        out_file.write(zero_response.message.content + "\n\n")
+                    except Exception as e:
+                        out_file.write(f"[ERROR during Zero-Shot]: {e}\n\n")
+
+                    # FEW-SHOT INFERENCE
+                    out_file.write(">>> FEW-SHOT RESPONSE <<<\n")
+                    try:
+                        few_shot_response: ChatResponse = chat(model=model, messages=few_shot_message)
+                        out_file.write(few_shot_response.message.content + "\n\n")
+                    except Exception as e:
+                        out_file.write(f"[ERROR during Few-Shot]: {e}\n\n")
+
+                    out_file.write("\n") # Add spacing between models
+
+        print(f"Saved results to: {output_file_path}\n")
