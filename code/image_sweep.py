@@ -3,21 +3,21 @@ from ollama import ChatResponse
 import os
 import copy  # Added to prevent list mutation bugs
 
-IMAGE_DIR = 'projects/VQA_Ambiguity/images'
-OUTPUT_DIR = 'projects/VQA_Ambiguity/output'  # Pulled out as a constant
+IMAGE_DIR = 'images'
+OUTPUT_DIR = 'output'  # Pulled out as a constant
 
 models = ['gemma4:31b', 'haervwe/GLM-4.6V-Flash-9B:latest', 'qwen3-vl:32b']
-personas = ['fully blind person', 'person that has cataracts']
+personas = ['fully blind person, can\'t see color nor light,', 'person that has cataracts']
 
 # 1. Base system template (without text examples)
 system_prompt_template = """
 You are a {persona} who during your normal day took a photo with your smartphone. 
-You are sending this photo to a Visual Question Answering model because something in the image that you want to learn about and you need their help.
+You are sending this photo to a Visual Question Answering model because you need help with learning about something in the image.
 
-Your task is to look at the image and generate a single, highly natural question that a real person would actually ask via text message. 
+Your task is to look at the image and generate a single, highly natural question that a real person would actually ask via casual text/conversation.
 
 RULES:
-- Focus Ambiguity: When the subject of your question could refer to multiple things present in the image. Write a focus ambiguous question if possible.
+- Focus Ambiguity: When the subject of your question could refer to multiple things present in the image. Write a focus ambiguous question if possible. For example, if there is a blue and red car in the image, a question of "what's the color of the car" is ambigious since it could be reffering to either one.
 - Write exactly like how a human texts/asks questions (casual and direct).
 - VQA systems don't always have context.
 - Put your thought process in <thought_process> tags.
@@ -37,7 +37,7 @@ few_shot_examples = {
         {
             'role': 'assistant',
             'content': """<thought_process>
-1. Since i'm fully blind, I won't know much about color or other such visual features. But I can feel around for shape.
+1. Since i'm fully blind, I can't see the color nor other visual features of the objects in frame. But I can feel around for shape.
 2. Since the picture contains many cleaning related items, I probably know generally that I took a picture of cleaning stuff but need help with specifics.
 3. Can I do a focus ambiguity question here? There are 3 cleaning product bottles which I could be asking about.
 4. There is one cleaning product framed more toward the camera, so I could be asking "what is this cleaning product?" which will have focus ambiguty with the other two cleaning products since i'm not specific.
@@ -57,8 +57,8 @@ few_shot_examples = {
             'content': """<thought_process>
 1. Since I have cataracts, I have an idea on blurry shapes and some color, though my color may be shifted.
 2. Since the picture contains many cleaning related items, I probably know generally that I took a picture of cleaning stuff but need help with specifics.
-3. Can I do a focus ambiguity question here? There are 3 cleaning product bottles which I could be asking about.
-4. There is one cleaning product framed more toward the camera, so I could be asking "what is this cleaning product?" since I can't read the label clearly, which will have focus ambiguty with the other two cleaning products since i'm not specific.
+3. Can I do a focus ambiguity question here? There are 2 blue cleaning products that I can identify since I can see color.
+4. So I could be asking "what is this blue cleaning product" since I can't read the label clearly, which will have focus ambiguty with the other blue cleaning product since i'm not specific.
 5. This question is also natural being short, casual, and actual use case.
 </thought_process>
 <question>What is this cleaning product?</question>"""
