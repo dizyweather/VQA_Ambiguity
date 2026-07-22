@@ -589,7 +589,7 @@ What is mounted on the handlebar?
 Is the lamp visible from here?
 What type of filling is in the pillow?
 What is displayed on the screen?
-How far away is the car that’s fully in the shade?
+How far away is the car thatÂ’s fully in the shade?
 What is placed on the table?
 Is the windshield clean?
 Is the cap properly secured?
@@ -653,7 +653,7 @@ What is written on the label?
 Is the car upside down?
 Is something placed on the bench?
 Is this a table to play cards on?
-What’s next to the napkin?
+WhatÂ’s next to the napkin?
 What is the color of the car that is fully visible in the foreground?
 What is under the pillow?
 Is somebody touching this plate?
