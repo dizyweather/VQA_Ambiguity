@@ -1,0 +1,113 @@
+IMAGE: COCO_train2014_000000083368.jpg
+============================================================
+
+MODEL: gemma4:26b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<question>What is that bag?</question>
+[TIMING] Total: 27.66s | Prompt: 4.93s | Generation: 16.91s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>what color is this pillow?</question>
+[TIMING] Total: 25.09s | Prompt: 13.22s | Generation: 11.00s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>What color is this bag on the couch?</question>
+[TIMING] Total: 312.69s | Prompt: 280.87s | Generation: 29.73s
+
+
+MODEL: gemma4:31b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<thought_process>
+I imagine I've just checked into a hotel room or arrived home and tossed my belongings—luggage and personal bags—onto the couch and floor. I cannot see exactly where everything landed or if they are closed, so I took a photo to ask for help.
+
+Looking at the image:
+- There is a red suitcase on the floor next to a yellow chair.
+- There are multiple colorful bags and items scattered across a yellow couch.
+- There are several items on the coffee table (a book, a small red flower/object, and a bottle).
+
+I want to create "focus ambiguity." If I ask about a "bag," it could refer to the suitcase or any of the various bags on the couch. This is a natural way for a blind person to ask because they don't know exactly what is in the frame.
+
+Possible questions:
+- "Is this bag open?" (Could be the red suitcase, the floral bag, etc.)
+- "What's that red thing?" (Could be the suitcase or the small plant on the table).
+- "What is next to the book?" (Could be the plant or the water bottle).
+
+The most casual and direct text-style question would likely be about whether a bag is open, as that's a common practical concern.
+</thought_process>
+
+<question>is this bag open?</question>
+[TIMING] Total: 100.74s | Prompt: 19.23s | Generation: 53.51s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<thought_process>
+I am in what looks like a hotel room or a living area. I see a bright yellow armchair and a matching yellow sofa, a glass coffee table with some items on it (a bottle of water, a book/folder), and a red suitcase on the floor. There are also various bags and belongings cluttered on the sofa.
+
+I might have taken this photo to identify one of the objects on the table or perhaps locate my luggage. Because there are several distinct items in the frame (the water bottle, the book, the suitcase, the lamp), asking a general question about "this" creates focus ambiguity.
+
+Brainstorming questions:
+- "What is this object?" (Ambiguous: could be the water bottle, the book, the red bag, etc.)
+- "Where is my bag?" (Ambiguous: could refer to the red suitcase on the floor or the bags on the couch).
+- "What color is this chair?" (Ambiguous: refers to either the armchair or the sofa).
+
+The most natural and direct question a person in this situation would ask via text/app is simply asking what an object is.</thought_process>
+
+<question>What is this object?</question>
+[TIMING] Total: 593.03s | Prompt: 528.06s | Generation: 62.31s
+
+
+MODEL: qwen3.6:27b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>what is inside that bag?</question>
+[TIMING] Total: 176.49s | Prompt: 13.86s | Generation: 58.60s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>Can you tell me what that yellow thing is?</question>
+[TIMING] Total: 676.15s | Prompt: 524.71s | Generation: 149.02s
+
+
+MODEL: qwen3.6:35b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<question> What is sitting on the glass table?</question>
+[TIMING] Total: 54.58s | Prompt: 1.26s | Generation: 51.10s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+The image shows a hotel room suite with multiple light sources (a floor lamp near the sofa and a desk lamp) and multiple bags/luggage items (a pink suitcase, a patterned tote bag, a black bag, and a yellow plastic bag). Asking about a generic object like "the lamp" or "the bottle" creates ambiguity because there are multiple candidates.
+
+<question>is the lamp turned on</question>
+[TIMING] Total: 112.77s | Prompt: 16.53s | Generation: 95.67s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>Can you please tell me what brand this shopping bag is from?</question>
+[TIMING] Total: 435.61s | Prompt: 326.31s | Generation: 107.96s
+
+
+MODEL: haervwe/GLM-4.6V-Flash-9B:latest
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<thought_process>
+I'm looking at this hotel room photo with yellow furniture and several bags scattered on the couch. I want to ask about one of the items but since my vision isn't clear, I need an ambiguous question that could refer to any bag there—like a backpack or handbag. The sofa has multiple bags, so asking which specific "that" bag is natural for someone who can't see details well.
+</thought_process>
+
+<question>Which bag is on the sofa?</question>
+[TIMING] Total: 15.88s | Prompt: 0.70s | Generation: 14.84s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<thought_process> I'm in a hotel room or living space with yellow furniture. There are multiple bags on the sofa—black one, patterned one, etc.—and various items on tables. Since I can't see all details clearly as a blind person, I might be trying to identify an item among similar ones. The focus ambiguity comes from asking about "this bag" when there are several bags that could be referred to.</thought_process>
+
+<question>What color of bag is this?</question>
+[TIMING] Total: 9.74s | Prompt: 0.49s | Generation: 8.67s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+[ERROR during VizWiz]: {"error":{"code":400,"message":"request (178568 tokens) exceeds the available context size (65792 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":178568,"n_ctx":65792}} (status code: 400)
+
+

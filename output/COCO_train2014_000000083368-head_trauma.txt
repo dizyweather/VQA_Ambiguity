@@ -1,0 +1,122 @@
+IMAGE: COCO_train2014_000000083368.jpg
+============================================================
+
+MODEL: gemma4:26b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>is there something on the yellow one?</question>
+[TIMING] Total: 126.31s | Prompt: 13.36s | Generation: 33.54s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>What color is this?</question>
+[TIMING] Total: 308.09s | Prompt: 279.03s | Generation: 27.25s
+
+
+MODEL: gemma4:31b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<thought_process>
+The patient is in a room (looks like a hotel suite or luxury living area) with several items scattered around. On the glass coffee table, there is a notebook/book, a small vase of flowers, and a bottle of water. On the yellow sofa, there are multiple colorful pouches/bags. On the armchair, there is a red patterned pillow. 
+
+The patient is likely experiencing confusion about the purpose of these items or where they belong. To create focus ambiguity, I want to ask a question that could apply to several different objects in the scene without specifying which one.
+
+Possible questions:
+1. "What is this for?" (Could refer to the water bottle, the notebook, any of the bags on the couch, or even the small flower arrangement).
+2. "Where does this go?" (Could refer to the red pillow, the pouches on the sofa, or the items on the table).
+3. "What's in here?" (Could refer to the bottle or any of the closed pouches/bags on the sofa).
+
+"What is this for?" directly addresses the persona's difficulty remembering the purpose of everyday objects and is highly ambiguous because there are many distinct functional items in the shot. It sounds like a natural, confused text message sent to a caregiver.
+</thought_process>
+<question>what is this for?</question>
+[TIMING] Total: 111.64s | Prompt: 19.21s | Generation: 62.97s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<thought_process>
+The image shows a hotel room or living area with several prominent objects: a yellow sofa with pillows and luggage on it, a matching yellow armchair, a glass coffee table with books and items, and a lamp. A patient with head trauma might be confused about their surroundings or the function of these common items. By asking a general question using "this," I create focus ambiguity because "this" could refer to the sofa, the chair, the coffee table, the lamp, or even the bags on the couch.
+</thought_process>
+
+<question>Can you tell me what this is please?</question>
+[TIMING] Total: 576.89s | Prompt: 528.03s | Generation: 46.06s
+
+
+MODEL: qwen3.6:27b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>
+what color is that bag?
+</question>
+[TIMING] Total: 351.63s | Prompt: 13.90s | Generation: 239.18s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<thought_process>
+The user wants me to act as a patient with head trauma confusion.
+I need to analyze the image: It looks like a hotel suite (wet bar, generic art, layout) but cluttered with personal items.
+There is a pink suitcase on the floor.
+There is a red bag on the yellow armchair.
+There is a pile of colorful bags/totes and yellow pillows on the yellow sofa.
+There is a laptop, water bottle, and magazine on the coffee table.
+There is a yellow shopping bag on the desk in the foreground.
+
+My task is to ask a question with "focus ambiguity".
+The subject of the question must refer to multiple things.
+Candidate 1: "What are all these bags?" (Refers to suitcase, red bag, sofa pile, yellow bag).
+Candidate 2: "Why is there stuff everywhere?" (Refers to all the items scattered around).
+Candidate 3: "What are these things for?" (Refers to the mix of travel gear, pillows, laptop).
+
+I'll go with a question about the scattered items, as this fits the confusion about whether I am arriving, living, or leaving.
+"I see a suitcase on the floor and piles of bags on the furniture. What are all these things for?"
+This has focus ambiguity because "all these things" could refer to the suitcase, the red bag, the pile on the sofa, or the yellow bag in front.
+
+Casual text style: "I'm confused about where I am. There's a suitcase on the floor and piles of bags on the couch. What are all these items for?"
+</thought_process>
+
+<question>I see a pink suitcase on the floor and piles of bags on the furniture. What are all these things for?</question>
+[TIMING] Total: 893.84s | Prompt: 523.70s | Generation: 367.52s
+
+
+MODEL: qwen3.6:35b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<thought_process>
+I am lying in a hotel room or suite that looks very nice but feels unfamiliar. I just woke up or wandered into the living area, and I'm looking around confused because I don't remember bringing all this stuff here. There are multiple piles of things: a coffee table with a notebook and water bottle, a pink suitcase on the floor, a desk in the foreground with some crumpled bags, and a sofa completely covered in several different handbags and totes. Because there are so many distinct objects and no clear "main subject" for me, I'm going to ask a general question about "all this stuff" so the caregiver doesn't know if I'm asking about the luggage, the coffee table items, or the bags on the couch.
+</thought_process>
+
+<question>What should I do with all of this stuff?</question>
+[TIMING] Total: 29.52s | Prompt: 1.27s | Generation: 26.09s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>
+what is beside that lamp
+</question>
+[TIMING] Total: 76.82s | Prompt: 16.57s | Generation: 59.69s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>Can you tell me what brand that bag is?</question>
+[TIMING] Total: 401.20s | Prompt: 326.67s | Generation: 73.22s
+
+
+MODEL: haervwe/GLM-4.6V-Flash-9B:latest
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<thought_process> I'm in a hotel room or similar space with yellow furniture and lots of personal items scattered around—bags on the couch, a suitcase near the chair, things on the coffee table. I'm confused about what belongs to me because my memory is off, so I want to know which bag might be mine since there are several different bags on the sofa. The question needs to be casual and ambiguous so the caregiver has to look at the image to figure out which "this" or "these" refers to.</thought_process>
+
+Which of these bags is mine?
+[TIMING] Total: 11.85s | Prompt: 0.72s | Generation: 10.81s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+Is there anything on this table?
+[TIMING] Total: 13.00s | Prompt: 0.49s | Generation: 11.91s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+[ERROR during VizWiz]: {"error":{"code":400,"message":"request (178587 tokens) exceeds the available context size (65792 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":178587,"n_ctx":65792}} (status code: 400)
+
+

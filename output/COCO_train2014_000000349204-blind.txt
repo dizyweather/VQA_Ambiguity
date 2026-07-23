@@ -1,0 +1,113 @@
+IMAGE: COCO_train2014_000000349204.jpg
+============================================================
+
+MODEL: gemma4:26b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<thought_process>
+The image shows a street scene in London (indicated by the red double-decker bus and the style of architecture/street furniture). There is a prominent red double-decker bus and a large red truck (likely a recovery or utility vehicle) side-by-side. Both are large, bright red, and occupy significant portions of the frame.
+
+I am a person with low vision. I've taken this photo to understand what's happening in the street. Because both the bus and the truck are large and clearly red, if I ask about "that big red vehicle," my question could naturally refer to either the bus or the truck, as I cannot distinguish which specific one I am pointing toward with my camera's focus/framing.
+
+Brainstormed questions:
+1. What is that red vehicle?
+2. Is that a bus or a truck? (Too specific)
+3. What's happening with that big red thing in the road?
+4. Can you see what that large red vehicle is?
+
+The most natural, casual text-style question that creates ambiguity between the two main subjects (the bus and the truck) is "What's that big red vehicle?".</thought_process>
+
+<question>What's that big red vehicle?</question>
+[TIMING] Total: 23.71s | Prompt: 5.22s | Generation: 14.29s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>What is that red vehicle?</question>
+[TIMING] Total: 31.00s | Prompt: 13.51s | Generation: 16.60s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>Is this a bus or a truck?</question>
+[TIMING] Total: 295.18s | Prompt: 279.40s | Generation: 13.48s
+
+
+MODEL: gemma4:31b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<thought_process>
+The image shows two prominent red vehicles on a city street: a double-decker bus and a large truck (service/fire vehicle). A person with low vision might take this photo to identify what is in front of them. Because both the bus and the truck are bright red and occupy a large portion of the frame, asking about "this vehicle" creates natural focus ambiguity—the sighted assistant won't know if they mean the bus or the truck.
+</thought_process>
+
+<question>what kind of vehicle is this?</question>
+[TIMING] Total: 73.33s | Prompt: 19.15s | Generation: 25.17s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<thought_process>
+The image shows two large, bright red vehicles on a city street: a double-decker bus and a specialized fire/emergency truck. There are also people standing on the sidewalk to the left.
+
+If I were blind or low-vision and took this photo, I would know there is something large and red in the frame, but I wouldn't be sure if I captured one vehicle, both, or which one is more central. Therefore, asking about "the red vehicle" creates natural focus ambiguity because it could refer to either the bus or the truck.
+
+Possible questions:
+- What is this red vehicle? (Ambiguous)
+- What kind of vehicle is this? (Ambiguous)
+- Can you tell me what this red thing is? (Casual, ambiguous)
+
+The most realistic and casual approach would be a direct question about the prominent red object. Since there are two distinct types of vehicles that both share the same color, "What is this red vehicle?" is a perfect example of focus ambiguity.</thought_process>
+<question>What is this red vehicle?</question>
+[TIMING] Total: 580.66s | Prompt: 528.08s | Generation: 49.92s
+
+
+MODEL: qwen3.6:27b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+[ERROR during Baseline]: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details (status code: 500)
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>
+Is this vehicle carrying people?
+</question>
+[TIMING] Total: 315.78s | Prompt: 13.91s | Generation: 120.46s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+What kind of red vehicle is this?
+[TIMING] Total: 587.74s | Prompt: 524.52s | Generation: 60.79s
+
+
+MODEL: qwen3.6:35b
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<question>What is that red vehicle doing?</question>
+[TIMING] Total: 50.09s | Prompt: 1.41s | Generation: 44.71s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+<question>
+What is written on the side of this vehicle?
+</question>
+[TIMING] Total: 45.39s | Prompt: 17.08s | Generation: 27.62s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+<question>Can you tell me what color the vehicle is?</question>
+[TIMING] Total: 427.53s | Prompt: 332.05s | Generation: 93.91s
+
+
+MODEL: haervwe/GLM-4.6V-Flash-9B:latest
+------------------------------------------------------------
+>>> BASELINE RESPONSE <<<
+<thought_process> I'm trying to understand this unusual street scene where a double-decker bus looks like it's being towed by another large red truck. I want to know what's happening with these vehicles because they're both prominent and red, making me wonder if one is doing something to the other.
+
+I brainstormed questions: "What vehicle is being pulled here?" (ambiguity between bus or truck), "Is this a bus or a truck?" (but they are different types so less ambiguity), "Which of these big red things is moving?" (focus on movement but still ambiguous). The most natural casual question would be about what the big red thing is doing, as both vehicles fit that description.
+
+So I'll go with something direct and ambiguous like asking about a big red vehicle's action.</thought_process>
+
+<question>What's that big red vehicle doing?</question>
+[TIMING] Total: 11.25s | Prompt: 0.76s | Generation: 10.16s
+
+>>> FOCUS AMBIGUITY CONTEXT RESPONSE <<<
+What color is the vehicle towing?
+[TIMING] Total: 15.15s | Prompt: 11.46s | Generation: 3.28s
+
+>>> VIZWIZ QUESTION CONTEXT RESPONSE <<<
+[ERROR during VizWiz]: {"error":{"code":400,"message":"request (178614 tokens) exceeds the available context size (65792 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":178614,"n_ctx":65792}} (status code: 400)
+
+
